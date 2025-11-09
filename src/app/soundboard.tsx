@@ -16,7 +16,7 @@ this component needs to be able to be dragged and dropped onto the timeline.
 */
 
 export default function Soundboard({ timeline }: { timeline: any[][] }) {
-  const [selectedImage, setSelectedImage] = useState([false, false, false, false, false, false]);
+  const [selectedImage, setSelectedImage] = useState([false, false, false, false, false, false, false]);
 
   return (
     <div className="w-full grid grid-cols-7 gap-4 justify-items-between border-b-3 font-sans">
