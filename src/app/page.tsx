@@ -7,6 +7,7 @@ import Soundboard from "./soundboard";
 import Timeline from "./timeline";
 import { audioInfo } from "./types";
 import { generateUsername } from "unique-username-generator";
+import LoopingCursor from "./cursor";
 
 export default function Home() {
   const [timeline, setTimeline] = useState<audioInfo[][]>(initializeTimelineAudioNodes());
