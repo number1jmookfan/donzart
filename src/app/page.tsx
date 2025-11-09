@@ -5,6 +5,7 @@ import Settings from "./settings";
 import Soundboard from "./soundboard";
 import Timeline from "./timeline";
 import { audioInfo } from "./types";
+import LoopingCursor from "./cursor";
 export default function Home() {
   const [timeline, setTimeline] = useState<audioInfo[][]>(initializeTimelineAudioNodes());
   const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });

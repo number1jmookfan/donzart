@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { audioInfo } from "./types";
+import LoopingCursor from "./cursor";
 /* timeline requires:
 -- for multiplayer access, if a value exists and you did not place it, do not add the sound
 to timeline.
@@ -58,9 +59,10 @@ export default function Timeline({ setTimeline, timeline, setSelectedCell }: Tim
   return (
     <div className="flex-1 w-full">
       {timeline.map((row, rowIndex) => (
-        <div key={rowIndex} className={`w-full h-[32.5vh] grid grid-cols-32 border-b-3`}>
+        <div key={rowIndex} className={`relative w-full h-[32.5vh] grid grid-cols-32 border-b-3 overflow-hidden`}>
           {row.map((cell, colIndex) => (
-            <div key={colIndex} className="border-r-3 last:border-r-0 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
+            
+            <div key={colIndex} className="border-r-3 last:border-r-0" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
                 if (setSelectedCell) {
                   setSelectedCell({ row: rowIndex, col: colIndex });
                 }
@@ -72,8 +74,12 @@ export default function Timeline({ setTimeline, timeline, setSelectedCell }: Tim
                     {cell.image && cell.sound != "/sounds/null.mp3" ? <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" /> : null}
                   </div>
               </div>
+
             </div>
           ))}
+          <div className="absolute inset-0 pointer-events-none">
+            <LoopingCursor />
+          </div>
         </div>
       ))}
     </div>
