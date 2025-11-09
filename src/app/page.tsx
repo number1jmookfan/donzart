@@ -13,6 +13,7 @@ import { Id } from "../../convex/_generated/dataModel";
 
 import { generateUsername } from "unique-username-generator";
 import LoopingCursor from "./cursor";
+import AudioPlayer from "./player";
 
 export default function Home() {
   // const [timeline, setTimeline] = useState<audioInfo[][]>(
@@ -108,6 +109,7 @@ export default function Home() {
         user={user}
       />
       {/* <Settings timeline={instruments} selectedCell={selectedCell} /> */}
+      <AudioPlayer convexData={instruments} />
     </div>
   );
 }

@@ -105,7 +105,7 @@ export default function Timeline({
                 return (
                   <div
                     key={colIndex}
-                    className="border-r-3 last:border-r-0 cursor-pointer"
+                    className="border-r-3 last:border-r-0"
                     onDragOver={handleDragOver}
                     onDrop={(e) =>
                       handleDrop(
