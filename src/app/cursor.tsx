@@ -24,7 +24,7 @@ export default function LoopingCursor() {
 
   return (
     <div
-      className="absolute h-full w-[2px] bg-[#ff0000] pointer-events-none z-0"
+      className="absolute h-full w-4 bg-[#ff0000] pointer-events-none z-0"
       style={{
         left: `${cursorPosition}px`,
       }}

@@ -7,7 +7,7 @@ import Soundboard from "./soundboard";
 import Timeline from "./timeline";
 import { audioInfo } from "./types";
 import { generateUsername } from "unique-username-generator";
-import LoopingCursor from "./cursor";
+import AudioPlayer from "./player";
 
 export default function Home() {
   const [timeline, setTimeline] = useState<audioInfo[][]>(initializeTimelineAudioNodes());
@@ -65,6 +65,7 @@ useEffect(() => {
       <Soundboard />
       <Timeline setTimeline={setTimeline} timeline={timeline} setSelectedCell={setSelectedCell} user={user} />
       <Settings timeline={timeline} selectedCell={selectedCell} />
+      {/* <AudioPlayer /> */}
     </div>
   );
 }

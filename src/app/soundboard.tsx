@@ -5,7 +5,7 @@ const sounds: [string, string, string, string][] = [
   ["/drum_selected.png", "/drum_unselected.png", "/sounds/drum.mp3", "Drums"],
   ["/piano_selected.png", "/piano_unselected.png", "/sounds/pian.mp3", "Piano"],
   ["/trumpet_selected.png", "/trumpet_unselected.png", "/sounds/trump.mp3", "Trumpet"],
-  ["/guitar_selected.png", "/guitar_unselected.png", "/sounds/guitar.mp3", "Guitar"],
+  ["/guitar_selected.png", "/guitar_unselected.png", "/sounds/guit.wav", "Guitar"],
   ["/colin_selected.png", "/colin_unselected.png", "/sounds/colin.mp3", "Colin"],
   ["/coming_soon.png", "/coming_soon2.png", "/sounds/null.mp3", "Coming Soon..."],
   ["/eraser_selected.png", "/eraser_unselected.png", "/sounds/null.mp3", "Erase"],
