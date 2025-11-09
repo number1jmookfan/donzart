@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { trackData } from "./types";
 import { ReactMutation } from "convex/react";
 import { FunctionReference } from "convex/server";

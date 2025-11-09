@@ -1,6 +1,6 @@
 "use client";
-import { useRef, useEffect } from "react";
-import { initializeTimelineAudioNodes, setVolume } from "./audio";
+import { useEffect } from "react";
+import { setVolume } from "./audio";
 import { trackData } from "./types";
 
 /*
