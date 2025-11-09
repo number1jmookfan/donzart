@@ -142,7 +142,7 @@ export default function Timeline({
                         ) : null}
                         {cell.type !== undefined ? (
                           <img
-                            src={`/${cell.type}_unselected.png`}
+                            src={`/${cell.type.toLowerCase()}_unselected.png`}
                             alt="Sound Thumbnail"
                             className="h-8 w-8 object-cover"
                           />
