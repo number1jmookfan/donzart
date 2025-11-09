@@ -8,7 +8,7 @@ const sounds: [string, string, string, string][] = [
   ["/guitar_selected.png", "/guitar_unselected.png", "/sounds/guitar.mp3", "Guitar"],
   ["/colin_selected.png", "/colin_unselected.png", "/sounds/colin.mp3", "Colin"],
   ["/coming_soon.png", "/coming_soon2.png", "/sounds/null.mp3", "Coming Soon..."],
-  ["/eraser_unselected.png", "/eraser_selected.png", "/sounds/null.mp3", "Erase"],
+  ["/eraser_selected.png", "/eraser_unselected.png", "/sounds/null.mp3", "Erase"],
 ];
 
 /*
