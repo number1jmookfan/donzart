@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { initializeTimelineAudioNodes } from "./audio";
-import Settings from "./settings";
 import Soundboard from "./soundboard";
 import Timeline from "./timeline";
-import { audioInfo, trackData } from "./types";
+import { trackData } from "./types";
 import { useQuery, useMutation, ReactMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { FunctionReference } from "convex/server";
@@ -81,7 +79,7 @@ export default function Home() {
       console.log("User interacted – autoplay now allowed!");
       // Preload or play your sound safely here
       const audio = new Audio("/sounds/drum.mp3");
-      audio.play().catch(err => console.warn("Autoplay blocked:", err));
+      audio.play().catch((err) => console.warn("Autoplay blocked:", err));
 
       // Remove the listener after it’s used once
       document.removeEventListener("click", handleFirstGesture);
