@@ -21,7 +21,7 @@ export default function Soundboard({ timeline }: { timeline: any[][] }) {
   return (
     <div className="w-full grid grid-cols-5 gap-4 justify-items-between border-b">
         {sounds.map(([image, unselectedImage, sound], index) => (
-          <div key={index} className="border-r p-4 justify-items-center cursor-pointer peer border-transparent hover:[border-image-source:url('/Border.png')] peer-checked:[border-image-source:url('/Border.png')] px-3"
+          <div key={index} className="p-4 justify-items-center cursor-pointer peer border-transparent hover:[border-image-source:url('/Border.png')] peer-checked:[border-image-source:url('/Border.png')] px-3"
               style={{
                 borderImageSlice: 50,
                 borderWidth: "10px",
@@ -29,7 +29,8 @@ export default function Soundboard({ timeline }: { timeline: any[][] }) {
               }} onClick={() => setSelectedImage([...selectedImage.map((_, i) => i === index ? !selectedImage[i] : selectedImage[i])])}> 
             <div>
               <img src={selectedImage[index] ? image : unselectedImage} draggable="true" className="h-5" onDragStart={(e) => {
-                    e.dataTransfer.setData("text/plain", sound);
+                    const payload = { image, sound };
+                    e.dataTransfer.setData("text/plain", JSON.stringify(payload));
                   }}
               />
               <audio id={`${index + 1}`} src={sound} />

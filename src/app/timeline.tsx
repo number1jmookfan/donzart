@@ -17,7 +17,7 @@ type TimelineProps = {
   setSelectedCell ?: (cell: { row: number; col: number }) => void;
 };
 
-export default function Timeline({timeline: initialTimeline, timelineRef, onChange, rows = 2, cols = 32, setSelectedCell}: TimelineProps) {
+export default function Timeline({timeline: initialTimeline, timelineRef, onChange, rows = 32, cols = 2, setSelectedCell}: TimelineProps) {
   const [timelineState, setTimelineState] = useState<any[][]>(
     initialTimeline || Array.from({ length: rows }, () => new Array(cols).fill(0))
   );
@@ -34,7 +34,8 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
   const handleDrop = (e: React.DragEvent, rowIndex: number, colIndex: number) => {
     e.preventDefault();
 
-    const sound = e.dataTransfer.getData("text/plain");
+    const payload = e.dataTransfer.getData("text/plain");
+    const { image , sound } = JSON.parse(payload);
 
     setTimelineState((prev) => {
       const next = prev.map((r) => [...r]);
@@ -49,33 +50,36 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
 
   return (
     <div className="flex-1 w-full">
-      {/* i broke something, fix later lol
       {timelineState.map((row, rowIndex) => (
-        <div key={rowIndex} className={`w-full grid grid-cols-[repeat(${cols},minmax(0,1fr))] border-b`}>
+        <div key={rowIndex} className={`w-full h-68.5 grid grid-cols-32 border-b`}>
           {row.map((cell, colIndex) => (
-            <div key={colIndex}
-              className={`w-full h-68.5 ${colIndex === timelineState[0].length - 1 ? "" : "border-r"} relative`}
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
+            <div key={colIndex} className="border-r last:border-r-0 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
+                if (setSelectedCell) {
+                  setSelectedCell({ row: rowIndex, col: colIndex });
+                }
+              }}
             >
             <div className="h-full w-full flex items-center justify-center">
+              
               {cell ? (
                 typeof cell !== "object" && cell !== null ? (
                   <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
                     {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                    <img src={cell.image} alt="Sound Thumbnail" className="h-12 w-12 object-cover" />
                   </div>
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center"></div>
+                  <div className="h-full w-full flex flex-col items-center justify-center gap-1">
+                    {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                  </div>
                 )
-              ) : (
-                <div className="h-full w-full" />
-              )}
+              ) : null}
             </div>
             </div>
           ))}
         </div>
       ))}
-            */}
+       
+            
     </div>
 
   );
