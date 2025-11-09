@@ -140,13 +140,13 @@ export default function Timeline({
                             src={String(cell.type)}
                           />
                         ) : null}
-                        {cell.type !== undefined ? (
+                        {/* {cell.type !== undefined ? (
                           <img
                             src={`/${cell.type.toLowerCase()}_unselected.png`}
                             alt="Sound Thumbnail"
                             className="h-8 w-8 object-cover"
                           />
-                        ) : null}
+                        ) : null} */}
                       </div>
                     </div>
                     <div className="absolute inset-0 pointer-events-none">
