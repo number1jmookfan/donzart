@@ -13,7 +13,7 @@ const sounds: [string, string, string, string][] = [
   [
     "/guitar_selected.png",
     "/guitar_unselected.png",
-    "/sounds/guitar.mp3",
+    "/sounds/guit.wav",
     "Guitar",
   ],
   [

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from 'react'
 import { clearInterval } from 'timers';
+import { trackData } from "./types";
 
 const sounds: string[] = [
   "/sounds/drum.mp3",
@@ -10,7 +11,7 @@ const sounds: string[] = [
   "/sounds/colin.mp3"
 ];
 
-export default function AudioPlayer() {
+export default function AudioPlayer(convex_data: trackData[]) {
     const prevCol = useRef(-1);
 
     useEffect(() => {

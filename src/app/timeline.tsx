@@ -97,7 +97,7 @@ export default function Timeline({
         ? timeline.map((row, rowIndex) => (
             <div
               key={rowIndex}
-              className={`w-full h-[32.5vh] grid grid-cols-32 border-b-3`}
+              className={`relative w-full h-[32.5vh] grid grid-cols-32 border-b-3`}
             >
               {row.positions.map((cell, colIndex) => {
                 console.log("CELL: ", cell);
@@ -146,15 +146,15 @@ export default function Timeline({
                         ) : null}
                       </div>
                     </div>
+                    <div className="absolute inset-0 pointer-events-none">
+                      <LoopingCursor />
+                    </div>
                   </div>
                 );
               })}
             </div>
           ))
         : "loading"}
-      <div className="absolute inset-0 pointer-events-none">
-        <LoopingCursor />
-      </div>
     </div>
   );
 }

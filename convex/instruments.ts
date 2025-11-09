@@ -1,7 +1,7 @@
 import { GenericDocument } from "convex/server";
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-import { trackData } from "@/app/types";
+import {trackData} from "../src/app/types"
 
 export const get = query({
   args: {},
