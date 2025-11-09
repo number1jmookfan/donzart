@@ -10,9 +10,8 @@ import { useQuery, useMutation, ReactMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { FunctionReference } from "convex/server";
 import { Id } from "../../convex/_generated/dataModel";
-
 import { generateUsername } from "unique-username-generator";
-import LoopingCursor from "./cursor";
+import Unmute from "./unmute";
 import AudioPlayer from "./player";
 
 export default function Home() {
@@ -32,6 +31,7 @@ export default function Home() {
         track: number;
         position: number;
         volume?: number;
+        color?: string;
       },
       null,
       string | undefined
@@ -105,6 +105,7 @@ export default function Home() {
             alt=""
             className=" mx-5"
           ></Image>
+          <Unmute></Unmute>
         </div>
         <div className="flex items-center justify-center h-full gap-2">
           <p className="text-center">{user.name}</p>

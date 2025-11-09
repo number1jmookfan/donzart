@@ -18,13 +18,14 @@ export const updateInstruments = mutation({
     type: v.string(),
     volume: v.optional(v.number()),
     id: v.id("instruments"),
+    color: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const track: trackData = await ctx.db.get(args.id);
     const newPositions = track.positions.map((pos, index) => {
       if (index === args.position) {
         return args.type !== "Erase"
-          ? { type: args.type, volume: args.volume }
+          ? { type: args.type, volume: args.volume, color: args.color }
           : {};
       }
       return pos;

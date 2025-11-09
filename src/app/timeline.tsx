@@ -23,6 +23,7 @@ type TimelineProps = {
         track: number;
         position: number;
         volume?: number;
+        color?: string;
       },
       null,
       string | undefined
@@ -89,6 +90,7 @@ export default function Timeline({
       position: colIndex,
       volume,
       type: payload.name!,
+      color: user.color,
     });
   };
   return (
@@ -128,7 +130,7 @@ export default function Timeline({
                         className={`h-full w-full flex flex-col items-center justify-center gap-1`}
                         style={{
                           backgroundColor:
-                            cell.type !== undefined ? user.color : "",
+                            cell.type !== undefined ? cell.color : "",
                         }}
                       >
                         {cell.type !== undefined ? (
