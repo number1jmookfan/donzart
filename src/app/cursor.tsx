@@ -5,11 +5,11 @@ export default function LoopingCursor() {
   const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
-    const startTime = Date.now();
+    const startTime = new Date("2001-09-11");
     const loopDuration = 4000;
 
     const updateCursor = () => {
-      const elapsed = Date.now() - startTime;
+      const elapsed = Date.now() - startTime.getTime();
       const progress = (elapsed % loopDuration) / loopDuration;
       const position = progress * window.innerWidth;
       setCursorPosition(position);

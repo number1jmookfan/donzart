@@ -76,6 +76,23 @@ export default function Home() {
     }
   }, [instruments]);
 
+  useEffect(() => {
+    const handleFirstGesture = () => {
+      console.log("User interacted – autoplay now allowed!");
+      // Preload or play your sound safely here
+      const audio = new Audio("/sounds/drum.mp3");
+      audio.play().catch(err => console.warn("Autoplay blocked:", err));
+
+      // Remove the listener after it’s used once
+      document.removeEventListener("click", handleFirstGesture);
+    };
+
+    // Listen for a gesture once after reload
+    document.addEventListener("click", handleFirstGesture);
+
+    return () => document.removeEventListener("click", handleFirstGesture);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen max-w-screen items-center justify-center font-sans">
       <div className="w-full h-full border-b-2 px-4 py-2 flex flex-row justify-between">
