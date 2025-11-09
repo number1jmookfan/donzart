@@ -1,15 +1,13 @@
-var sounds = [
-    ['file.svg', 'drum1_sound.mp3'],
-    ['drum2_image', 'drum2_sound.mp3'],
-    ['drum3_image', 'drum3_sound.mp3'],
-    ['drum4_image', 'drum4_sound.mp3'],
-    ['drum5_image', 'drum5_sound.mp3'],
-    ['drum6_image', 'drum6_sound.mp3'],
-    ['drum7_image', 'drum7_sound.mp3'],
-    ['drum8_image', 'drum8_sound.mp3'],
-    ['drum9_image', 'drum9_sound.mp3'],
-    ['drum10_image', 'drum10_sound.mp3'],
-    ['drum11_image', 'drum11_sound.mp3'],
+import Image from 'next/image'
+import { useState } from 'react';
+
+const sounds: [string, string, string][] = 
+[
+  ["/drum_selected.png", "/drum_unselected.png", "/sounds/drum.mp3"],
+  ["/piano_selected.png", "/piano_unselected.png", "/sounds/piano.mp3"],
+  ["/trumpet_selected.png", "/trumpet_unselected.png", "/sounds/trumpet.mp3"],
+  ["/colin_selected.png", "/colin_unselected.png", "/sounds/null.mp3"],
+  ["/coming_soon.png", "/coming_soon.png", "/sounds/null.mp3"]
 ];
 
 /*
@@ -18,16 +16,23 @@ this component needs to be able to be dragged and dropped onto the timeline.
 */
 
 export default function Soundboard({ timeline }: { timeline: any[][] }) {
+  const [selectedImage, setSelectedImage] = useState([false, false, false, false, false]);
+
   return (
-    <div className="w-full grid grid-cols-11 gap-4 justify-items-between border-b">
-        {sounds.map(([image, sound], index) => (
-          <div key={index} className="border-r p-4 justify-items-center" >
+    <div className="w-full grid grid-cols-5 gap-4 justify-items-between border-b">
+        {sounds.map(([image, unselectedImage, sound], index) => (
+          <div key={index} className="border-r p-4 justify-items-center cursor-pointer peer border-transparent hover:[border-image-source:url('/Border.png')] peer-checked:[border-image-source:url('/Border.png')] px-3"
+              style={{
+                borderImageSlice: 50,
+                borderWidth: "10px",
+                borderStyle: "none solid none solid",
+              }} onClick={() => setSelectedImage([...selectedImage.map((_, i) => i === index ? !selectedImage[i] : selectedImage[i])])}> 
             <div>
-              <img src={image} alt={`Drum ${index + 1}`} draggable="true" className="h-5" onDragStart={(e) => {
+              <img src={selectedImage[index] ? image : unselectedImage} draggable="true" className="h-5" onDragStart={(e) => {
                     e.dataTransfer.setData("text/plain", sound);
                   }}
               />
-              <audio id={`drum${index + 1}`} src={sound} />
+              <audio id={`${index + 1}`} src={sound} />
             </div>
 
           </div>

@@ -5,9 +5,7 @@ import React, { useState, useEffect } from "react";
 to timeline.
 -- on drop, wait until play completes, then add to timeline.
 -- each cell in timeline can have one sound.
--- each cell will have a color that indicates who the sound belongs to.
--- the color can be determined by the user's ID or some other identifier.
--- each cell in the timeline will send its context to settings for adjustment.
+-- each cell will have a color that indicates who placed the sound.
 */
 
 type TimelineProps = {
@@ -16,7 +14,7 @@ type TimelineProps = {
   onChange?: (t: any[][]) => void;
   rows?: number;
   cols?: number;
-  setSelectedCell: (cell: { row: number; col: number }) => void;
+  setSelectedCell ?: (cell: { row: number; col: number }) => void;
 };
 
 export default function Timeline({timeline: initialTimeline, timelineRef, onChange, rows = 2, cols = 32, setSelectedCell}: TimelineProps) {
@@ -42,8 +40,7 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
       const next = prev.map((r) => [...r]);
       next[rowIndex][colIndex] = sound;
       timelineState[rowIndex][colIndex].audioContext.createMediaElementSource(new Audio(String(sound)))
-      setSelectedCell({ row: rowIndex, col: colIndex });
-      console.log(timelineState[rowIndex][colIndex])
+      console.log(timelineState[rowIndex][colIndex] )
       if (timelineRef) timelineRef.current = next;
       onChange?.(next);
       return next;
@@ -52,11 +49,11 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
 
   return (
     <div className="flex-1 w-full">
+      {/* i broke something, fix later lol
       {timelineState.map((row, rowIndex) => (
         <div key={rowIndex} className={`w-full grid grid-cols-[repeat(${cols},minmax(0,1fr))] border-b`}>
           {row.map((cell, colIndex) => (
-            <div
-              key={colIndex}
+            <div key={colIndex}
               className={`w-full h-68.5 ${colIndex === timelineState[0].length - 1 ? "" : "border-r"} relative`}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
@@ -78,6 +75,8 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
           ))}
         </div>
       ))}
+            */}
     </div>
+
   );
 }
