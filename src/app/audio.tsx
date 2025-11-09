@@ -12,7 +12,7 @@ export function initializeTimelineAudioNodes() : any[][] {
     for (let i = 0; i < timeline.length; i++) {
         for (let j = 0; j < timeline[i].length; j++) {
         // create a context for each node
-        const audioContext = new window.AudioContext();
+        const audioContext = new AudioContext();
         const gainNode = audioContext.createGain(); // volume
         const pannerNode = audioContext.createStereoPanner(); // pan
         //const reverbNode = audioContext.createConvolver(); // reverb
