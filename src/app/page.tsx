@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import { initializeTimelineAudioNodes } from "./audio";
 import Settings from "./settings";
 import Soundboard from "./soundboard";
@@ -72,7 +73,7 @@ export default function Home() {
       getRandomUser();
       hasUser.current = true;
     }
-  }, [timeline]);
+  }, [instruments]);
 
   return (
     <div className="flex flex-col min-h-screen max-w-screen items-center justify-center font-sans">

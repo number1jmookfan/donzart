@@ -101,6 +101,7 @@ export default function Timeline({
             >
               {row.positions.map((cell, colIndex) => {
                 console.log("CELL: ", cell);
+                console.log("COLOR: ", user.color);
                 return (
                   <div
                     key={colIndex}
@@ -124,9 +125,11 @@ export default function Timeline({
                   >
                     <div className="h-full w-full flex items-center justify-center">
                       <div
-                        className={`h-full w-full flex flex-col items-center justify-center gap-1 ${
-                          cell.type !== undefined ? user.color : ""
-                        }`}
+                        className={`h-full w-full flex flex-col items-center justify-center gap-1`}
+                        style={{
+                          backgroundColor:
+                            cell.type !== undefined ? user.color : "",
+                        }}
                       >
                         {cell.type !== undefined ? (
                           <audio
