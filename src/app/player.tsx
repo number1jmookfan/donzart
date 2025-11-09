@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef } from 'react'
 import { clearInterval } from 'timers';
-// import timeline from "./timeline"
 
 const sounds: string[] = [
   "/sounds/drum.mp3",
