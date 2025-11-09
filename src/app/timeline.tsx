@@ -34,14 +34,28 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
   const handleDrop = (e: React.DragEvent, rowIndex: number, colIndex: number) => {
     e.preventDefault();
 
-    const payload = e.dataTransfer.getData("text/plain");
-    const { image , sound } = JSON.parse(payload);
+    let payloadJson = e.dataTransfer.getData("application/json");
+    let payload: { image?: string; sound?: string } | null = null;
+
+    if (payloadJson) {
+      try {
+        payload = JSON.parse(payloadJson);
+      } catch (err) {
+        console.warn("invalid JSON payload", err);
+        payload = null;
+      }
+    }
+
+    if (!payload) {
+      const sound = e.dataTransfer.getData("text/plain");
+      const image = e.dataTransfer.getData("text/image");
+      if (!sound && !image) return;
+      payload = { sound: sound || undefined, image: image || undefined };
+    }
 
     setTimelineState((prev) => {
       const next = prev.map((r) => [...r]);
-      next[rowIndex][colIndex] = sound;
-      timelineState[rowIndex][colIndex].audioContext.createMediaElementSource(new Audio(String(sound)))
-      console.log(timelineState[rowIndex][colIndex] )
+      next[rowIndex][colIndex] = payload;
       if (timelineRef) timelineRef.current = next;
       onChange?.(next);
       return next;
@@ -60,19 +74,17 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
               }}
             >
             <div className="h-full w-full flex items-center justify-center">
-              
-              {cell ? (
-                typeof cell !== "object" && cell !== null ? (
-                  <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
-                    {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
-                    <img src={cell.image} alt="Sound Thumbnail" className="h-12 w-12 object-cover" />
-                  </div>
+              {cell.sound && cell.image ? (
+                <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
+                  {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                  <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" />
+                </div>
                 ) : (
                   <div className="h-full w-full flex flex-col items-center justify-center gap-1">
                     {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
                   </div>
                 )
-              ) : null}
+              }
             </div>
             </div>
           ))}
