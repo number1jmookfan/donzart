@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { trackData } from "./types";
 import { ReactMutation } from "convex/react";
