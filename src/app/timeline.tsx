@@ -67,9 +67,9 @@ export default function Timeline({ setTimeline, timeline, setSelectedCell }: Tim
               }}
             >
               <div className="h-full w-full flex items-center justify-center">
-                  <div className={`h-full w-full flex flex-col items-center justify-center gap-1 ${cell.sound && cell.image ? "bg-blue-600" : ""}`}>
-                    {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
-                    {cell.image ? <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" /> : null}
+                  <div className={`h-full w-full flex flex-col items-center justify-center gap-1 ${cell.sound && cell.image && cell.sound != "/sounds/null.mp3" ? "bg-blue-600" : ""}`}>
+                    {cell.sound && cell.sound != "/sounds/null.mp3" ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                    {cell.image && cell.sound != "/sounds/null.mp3" ? <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" /> : null}
                   </div>
               </div>
             </div>

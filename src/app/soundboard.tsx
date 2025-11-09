@@ -37,7 +37,7 @@ export default function Soundboard({ timeline }: { timeline: any[][] }) {
               src={selectedImage[index] ? image : unselectedImage}
               width={70}
               height={70}
-              draggable={(index == sounds.length-1) ? "false" :  "true"}
+              draggable={(name == "Coming Soon...") ? "false" :  "true"}
               className=""
               alt=""
               onDragStart={(e) => {
