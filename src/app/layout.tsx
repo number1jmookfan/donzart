@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Happy_Monkey } from "next/font/google";
 import "./globals.css";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 const happyMonkey = Happy_Monkey({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: "400"
+  weight: "400",
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,11 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        suppressHydrationWarning
-        className={`${happyMonkey.variable}`}
-      >
-        {children}
+      <body suppressHydrationWarning className={`${happyMonkey.variable}`}>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
   );
