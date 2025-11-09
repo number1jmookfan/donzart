@@ -66,7 +66,7 @@ export default function Timeline({ setTimeline, timeline, setSelectedCell, user 
       {timeline.map((row, rowIndex) => (
         <div key={rowIndex} className={`relative w-full h-[32.5vh] grid grid-cols-32 border-b-3 overflow-hidden`}>
           {row.map((cell, colIndex) => (
-            <div key={colIndex} className="border-l-3 last:border-r-3 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
+            <div key={colIndex} className={`border-l-3 cursor-pointer ${colIndex === timeline[0].length-1 ? "border-r-3" : ""}`} onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
                 if (setSelectedCell) {
                   setSelectedCell({ row: rowIndex, col: colIndex });
                 }
