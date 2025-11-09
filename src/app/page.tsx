@@ -10,8 +10,8 @@ import { useQuery, useMutation, ReactMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { FunctionReference } from "convex/server";
 import { Id } from "../../convex/_generated/dataModel";
-
 import { generateUsername } from "unique-username-generator";
+import Unmute from "./unmute";
 
 export default function Home() {
   // const [timeline, setTimeline] = useState<audioInfo[][]>(
@@ -87,6 +87,7 @@ export default function Home() {
             alt=""
             className=" mx-5"
           ></Image>
+          <Unmute></Unmute>
         </div>
         <div className="flex items-center justify-center h-full gap-2">
           <p className="text-center">{user.name}</p>
