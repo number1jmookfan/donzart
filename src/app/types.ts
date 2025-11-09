@@ -9,3 +9,8 @@ export type audioInfo = {
   sound: string;
   image: string;
 };
+
+export type convexData = {
+  type: string;
+  volume: number;
+};
