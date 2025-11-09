@@ -1,8 +1,9 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import React, { useEffect } from "react";
 import { trackData } from "./types";
 import { ReactMutation } from "convex/react";
 import { FunctionReference } from "convex/server";
 import { Id } from "../../convex/_generated/dataModel";
+import LoopingCursor from "./cursor";
 /* timeline requires:
 -- for multiplayer access, if a value exists and you did not place it, do not add the sound
 to timeline.
@@ -31,12 +32,18 @@ type TimelineProps = {
   setSelectedCell: React.Dispatch<
     React.SetStateAction<{ row: number; col: number }>
   >;
+  user: {
+    name: string;
+    color: string;
+    border: string;
+  };
 };
 
 export default function Timeline({
   setTimeline,
   timeline,
   setSelectedCell,
+  user,
 }: TimelineProps) {
   // sync external ref whenever timeline changes
   // useEffect(() => {}, [timeline]);
@@ -118,7 +125,7 @@ export default function Timeline({
                     <div className="h-full w-full flex items-center justify-center">
                       <div
                         className={`h-full w-full flex flex-col items-center justify-center gap-1 ${
-                          cell.type !== undefined ? "bg-blue-600" : ""
+                          cell.type !== undefined ? user.color : ""
                         }`}
                       >
                         {cell.type !== undefined ? (
@@ -142,6 +149,9 @@ export default function Timeline({
             </div>
           ))
         : "loading"}
+      <div className="absolute inset-0 pointer-events-none">
+        <LoopingCursor />
+      </div>
     </div>
   );
 }
