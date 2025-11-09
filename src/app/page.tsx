@@ -4,19 +4,36 @@ import { initializeTimelineAudioNodes } from "./audio";
 import Settings from "./settings";
 import Soundboard from "./soundboard";
 import Timeline from "./timeline";
-import { audioInfo } from "./types";
-import { useQuery } from "convex/react";
+import { audioInfo, trackData } from "./types";
+import { useQuery, useMutation, ReactMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { FunctionReference } from "convex/server";
+import { Id } from "../../convex/_generated/dataModel";
 
 export default function Home() {
-  const [timeline, setTimeline] = useState<audioInfo[][]>(
-    initializeTimelineAudioNodes()
-  );
-  const instruments = useQuery(api.instruments.get);
-
+  // const [timeline, setTimeline] = useState<audioInfo[][]>(
+  //   initializeTimelineAudioNodes()
+  // );
+  //order by track maybe
+  const instruments: trackData[] = useQuery(api.instruments.get)!;
   console.log("INSTRUMENTS:  ", instruments);
+  const updateInstruments: ReactMutation<
+    FunctionReference<
+      "mutation",
+      "public",
+      {
+        id: Id<"instruments">;
+        type: string;
+        track: number;
+        position: number;
+        volume?: number;
+      },
+      null,
+      string | undefined
+    >
+  > = useMutation(api.instruments.updateInstruments);
+
   const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });
-  useEffect(() => {}, [timeline]);
 
   return (
     <div className="flex flex-col min-h-screen max-w-screen items-center justify-center font-sans">
@@ -25,11 +42,12 @@ export default function Home() {
       </h1>
       <Soundboard />
       <Timeline
-        setTimeline={setTimeline}
-        timeline={timeline}
+        //will be mutation hold your horses
+        setTimeline={updateInstruments}
+        timeline={instruments}
         setSelectedCell={setSelectedCell}
       />
-      <Settings timeline={timeline} selectedCell={selectedCell} />
+      {/* <Settings timeline={instruments} selectedCell={selectedCell} /> */}
     </div>
   );
 }
