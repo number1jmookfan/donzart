@@ -1,18 +1,18 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 /*
 1. Create a context for every element in the matrix/timeline
 2. Each context has its own gain node
 3. The setVolume function takes an additional parameter to identify which context's gain node to adjust
 */
 export function initializeTimelineAudioNodes() : any[][] {
-    const timelineRef = useRef<any[][]>(Array.from({ length: 2 }, () => new Array(32).fill(0)));
-    const timeline = timelineRef.current;
+    const [timeline, setTimeline] = useState(Array.from({ length: 2 }, () => new Array(32).fill(0)));
 
     for (let i = 0; i < timeline.length; i++) {
         for (let j = 0; j < timeline[i].length; j++) {
         // create a context for each node
-        const audioContext = new AudioContext();
+        const audioContext = new window.AudioContext();
         const gainNode = audioContext.createGain(); // volume
         const pannerNode = audioContext.createStereoPanner(); // pan
         //const reverbNode = audioContext.createConvolver(); // reverb

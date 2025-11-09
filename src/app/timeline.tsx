@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { audioInfo } from "./types";
 /* timeline requires:
 -- for multiplayer access, if a value exists and you did not place it, do not add the sound
 to timeline.
@@ -9,23 +9,17 @@ to timeline.
 */
 
 type TimelineProps = {
-  timeline?: any[][];
-  timelineRef?: React.RefObject<any[][]>;
-  onChange?: (t: any[][]) => void;
-  rows?: number;
-  cols?: number;
-  setSelectedCell ?: (cell: { row: number; col: number }) => void;
+  setTimeline: React.Dispatch<React.SetStateAction<audioInfo[][]>>;
+  timeline: audioInfo[][];
+  setSelectedCell: React.Dispatch<
+    React.SetStateAction<{ row: number; col: number }>
+  >;
 };
 
-export default function Timeline({timeline: initialTimeline, timelineRef, onChange, rows = 32, cols = 2, setSelectedCell}: TimelineProps) {
-  const [timelineState, setTimelineState] = useState<any[][]>(
-    initialTimeline || Array.from({ length: rows }, () => new Array(cols).fill(0))
-  );
 
-  // sync external ref whenever timelineState changes
-  useEffect(() => {
-    if (timelineRef) timelineRef.current = timelineState;
-  }, [timelineRef, timelineState]);
+export default function Timeline({ setTimeline, timeline, setSelectedCell }: TimelineProps)  {
+  // sync external ref whenever timeline changes
+  useEffect(() => {}, [timeline]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -53,46 +47,35 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
       payload = { sound: sound || undefined, image: image || undefined };
     }
 
-    setTimelineState((prev) => {
+
+    setTimeline((prev) => {
       const next = prev.map((r) => [...r]);
-      next[rowIndex][colIndex] = payload;
-      if (timelineRef) timelineRef.current = next;
-      onChange?.(next);
+      next[rowIndex][colIndex].sound = payload?.sound!;
+      next[rowIndex][colIndex].image = payload?.image!
       return next;
     });
   };
-
   return (
     <div className="flex-1 w-full">
-      {timelineState.map((row, rowIndex) => (
-        <div key={rowIndex} className={`w-full h-68.5 grid grid-cols-32 border-b`}>
+      {timeline.map((row, rowIndex) => (
+        <div key={rowIndex} className={`w-full h-[32.5vh] grid grid-cols-32 border-b-3`}>
           {row.map((cell, colIndex) => (
-            <div key={colIndex} className="border-r last:border-r-0 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
+            <div key={colIndex} className="border-r-3 last:border-r-0 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
                 if (setSelectedCell) {
                   setSelectedCell({ row: rowIndex, col: colIndex });
                 }
               }}
             >
-            <div className="h-full w-full flex items-center justify-center">
-              {cell.sound && cell.image ? (
-                <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
-                  {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
-                  <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" />
-                </div>
-                ) : (
-                  <div className="h-full w-full flex flex-col items-center justify-center gap-1">
+              <div className="h-full w-full flex items-center justify-center">
+                  <div className={`h-full w-full flex flex-col items-center justify-center gap-1 ${cell.sound && cell.image ? "bg-blue-600" : ""}`}>
                     {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                    {cell.image ? <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" /> : null}
                   </div>
-                )
-              }
-            </div>
+              </div>
             </div>
           ))}
         </div>
       ))}
-       
-            
     </div>
-
   );
 }
