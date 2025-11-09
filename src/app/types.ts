@@ -15,6 +15,7 @@ export type audioInfo = {
 export type trackDatum = {
   type: string;
   volume?: number;
+  color?: string;
 };
 
 export type trackData = {

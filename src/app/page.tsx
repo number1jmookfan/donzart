@@ -30,6 +30,7 @@ export default function Home() {
         track: number;
         position: number;
         volume?: number;
+        color?: string;
       },
       null,
       string | undefined
