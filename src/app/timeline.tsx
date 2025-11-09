@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { audioInfo } from "./types";
 
 /* timeline requires:
 -- for multiplayer access, if a value exists and you did not place it, do not add the sound
@@ -10,16 +11,24 @@ to timeline.
 
 type TimelineProps = {
   timeline?: any[][];
-  timelineRef?: React.RefObject<any[][]>;
+  timelineRef?: React.RefObject<audioInfo[][]>;
   onChange?: (t: any[][]) => void;
   rows?: number;
   cols?: number;
-  setSelectedCell ?: (cell: { row: number; col: number }) => void;
+  setSelectedCell?: (cell: { row: number; col: number }) => void;
 };
 
-export default function Timeline({timeline: initialTimeline, timelineRef, onChange, rows = 32, cols = 2, setSelectedCell}: TimelineProps) {
+export default function Timeline({
+  timeline: initialTimeline,
+  timelineRef,
+  onChange,
+  rows = 32,
+  cols = 2,
+  setSelectedCell,
+}: TimelineProps) {
   const [timelineState, setTimelineState] = useState<any[][]>(
-    initialTimeline || Array.from({ length: rows }, () => new Array(cols).fill(0))
+    initialTimeline ||
+      Array.from({ length: rows }, () => new Array(cols).fill(0))
   );
 
   // sync external ref whenever timelineState changes
@@ -31,10 +40,14 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
     e.preventDefault();
   };
 
-  const handleDrop = (e: React.DragEvent, rowIndex: number, colIndex: number) => {
+  const handleDrop = (
+    e: React.DragEvent,
+    rowIndex: number,
+    colIndex: number
+  ) => {
     e.preventDefault();
 
-    let payloadJson = e.dataTransfer.getData("application/json");
+    const payloadJson = e.dataTransfer.getData("application/json");
     let payload: { image?: string; sound?: string } | null = null;
 
     if (payloadJson) {
@@ -65,34 +78,52 @@ export default function Timeline({timeline: initialTimeline, timelineRef, onChan
   return (
     <div className="flex-1 w-full">
       {timelineState.map((row, rowIndex) => (
-        <div key={rowIndex} className={`w-full h-68.5 grid grid-cols-32 border-b`}>
+        <div
+          key={rowIndex}
+          className={`w-full h-68.5 grid grid-cols-32 border-b`}
+        >
           {row.map((cell, colIndex) => (
-            <div key={colIndex} className="border-r last:border-r-0 cursor-pointer" onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, rowIndex, colIndex)} onClick={() => {
+            <div
+              key={colIndex}
+              className="border-r last:border-r-0 cursor-pointer"
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
+              onClick={() => {
                 if (setSelectedCell) {
                   setSelectedCell({ row: rowIndex, col: colIndex });
                 }
               }}
             >
-            <div className="h-full w-full flex items-center justify-center">
-              {cell.sound && cell.image ? (
-                <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
-                  {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
-                  <img src={cell.image} alt="Sound Thumbnail" className="h-8 w-8 object-cover" />
-                </div>
+              <div className="h-full w-full flex items-center justify-center">
+                {cell.sound && cell.image ? (
+                  <div className="h-full w-full flex flex-col items-center justify-center gap-1 bg-blue-600">
+                    {cell.sound ? (
+                      <audio
+                        id={`audio-${rowIndex}-${colIndex}`}
+                        src={String(cell.sound)}
+                      />
+                    ) : null}
+                    <img
+                      src={cell.image}
+                      alt="Sound Thumbnail"
+                      className="h-8 w-8 object-cover"
+                    />
+                  </div>
                 ) : (
                   <div className="h-full w-full flex flex-col items-center justify-center gap-1">
-                    {cell.sound ? <audio id={`audio-${rowIndex}-${colIndex}`} src={String(cell.sound)} /> : null}
+                    {cell.sound ? (
+                      <audio
+                        id={`audio-${rowIndex}-${colIndex}`}
+                        src={String(cell.sound)}
+                      />
+                    ) : null}
                   </div>
-                )
-              }
-            </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
       ))}
-       
-            
     </div>
-
   );
 }
