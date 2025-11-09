@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen max-w-screen items-center justify-center font-sans">
       <h1 className="text-4xl font-bold border-b-3 w-full p-2 font-sans">Donzart</h1>
-      <Soundboard timeline={timeline} />
+      <Soundboard />
       <Timeline setTimeline={setTimeline} timeline={timeline} setSelectedCell={setSelectedCell} />
       <Settings timeline={timeline} selectedCell={selectedCell} />
     </div>

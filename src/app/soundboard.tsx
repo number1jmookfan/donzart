@@ -15,7 +15,7 @@ const sounds: [string, string, string, string][] = [
 this component needs to be able to be dragged and dropped onto the timeline.
 */
 
-export default function Soundboard({ timeline }: { timeline: any[][] }) {
+export default function Soundboard() {
   const [selectedImage, setSelectedImage] = useState([false, false, false, false, false, false, false]);
 
   return (
